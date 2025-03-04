@@ -1,0 +1,68 @@
+:root{
+  --gradient:linear-gradient(180deg, 
+  #6693bd 0%,
+  #062f87 100%);
+  --dark:#001747;
+  --grey:#b1bacb;
+  --grey-border:rgba(210,210,210,0.75);
+  --grey-light:#eeeeee;
+  --grey-dark:#405175;
+  --blue:#2d70fd;
+  --white:#ffffff;
+  --green:#00d8a7;
+}
+
+body{
+    background: var(--gradient);
+    margin:0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-evenly;
+    align-items: center;
+}
+
+.btn{
+  color:var(--white);
+  font-size: 1.1rem;
+  background-color:var(--blue) ;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.3rem;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+}
+h1,h2,h3,h4,h5,h6,p{
+  margin: 0;
+}
+/*Todo Container*/
+.todo{
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 50%;
+  width: 60%;
+  max-width: 30rem;
+  padding:3rem;
+  border-radius:2rem;
+  box-shadow: 0 1rem 3rem 1rem rgba(0,23,71,0.15);
+}
+h2{
+  text-transform: uppercase;
+  height: 3rem;
+  color: var(--dark);
+  text-align: center;
+}
+.input{
+  position: relative;
+  display: flex;
+}
+.input-field{
+  width:100%;
+  border: 0.06rem solid #d2d2d2bf;
+  border-radius: 1rem;
+  padding:1.25rem;
+  font-size: 1rem;
+}
