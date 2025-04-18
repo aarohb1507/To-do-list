@@ -36,12 +36,17 @@ function addTask(){
     saveToLocalStorage();
     todoInput.value="";
     displayTasks(); // Ensure tasks are displayed after adding a new task
+    animateTaskAddition();
   }
 }
 function deleteAllTasks(){
-  todo=[];
-  saveToLocalStorage();
-  displayTasks();
+  todoList.classList.add("fade-out"); // Add fade-out animation
+  setTimeout(() => {
+    todo = [];
+    saveToLocalStorage();
+    displayTasks();
+    todoList.classList.remove("fade-out");
+  }, 500); // Match animation duration
 }
 
 function displayTasks(){
@@ -93,4 +98,12 @@ function editTask(index){
 
 function saveToLocalStorage(){
   localStorage.setItem("todo",JSON.stringify(todo));
+}
+
+function animateTaskAddition() {
+  const lastTask = todoList.lastElementChild;
+  if (lastTask) {
+    lastTask.classList.add("slide-in");
+    setTimeout(() => lastTask.classList.remove("slide-in"), 500); // Match animation duration
+  }
 }
