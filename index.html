@@ -5,21 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <script src="./script.js" defer></script>
   <title>Todo</title>
 </head>
 <body>
+  <header class="hero">
+    <h1>What are your<br>goals for today?</h1>
+  </header>
+
   <section class="todo">
-    <h2>To-do list</h2>
+    <h2>Today</h2>
+    <p class="quote">Consistency compounds — one small win, every day.</p>
     <div class="input"><input type="text" class="input-field" 
       id="todoInput" placeholder="Add a new todo">
       <button class="btn">Add</button>
     </div>
-    <ul class="scroll fade-container">
-      <li id="todoList">
-
-      </li>
-    </ul>
+    <ul id="todoList" class="scroll fade-container"></ul>
     <div><hr class="counter">
       <div class="counter-container">
         <p><span id="todoCount">0</span> items total</p>

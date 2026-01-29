@@ -51,25 +51,63 @@ function deleteAllTasks(){
 
 function displayTasks(){
   todoList.innerHTML="";
-  todo.forEach((item, index) => { // Changed todo.array to todo
-    const p = document.createElement("p");
-    p.innerHTML=`
-      <div class='todo-container'>
-        <input type='checkbox' class="todo-checkbox"
-        id="input-${index}" ${item.disabled? "checked":""}
-        >
-        <p id="todo-${index}" class="${item.disabled? "disabled": ""}"
-        onclick="editTask(${index})">
-          ${item.text}
-        </p>
-      </div>
-    `;
-    p.querySelector(".todo-checkbox").addEventListener("change",()=>{
-      toggleTask(index);
+  todo.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.className = "todo-item";
+    li.dataset.index = index;
+
+    const container = document.createElement("div");
+    container.className = "todo-container";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "todo-checkbox";
+    checkbox.id = `input-${index}`;
+    checkbox.checked = !!item.disabled;
+    checkbox.addEventListener("change", () => toggleTask(index));
+
+    const textEl = document.createElement("p");
+    textEl.id = `todo-${index}`;
+    textEl.className = item.disabled ? "disabled" : "";
+    textEl.textContent = item.text;
+    textEl.tabIndex = 0;
+    textEl.addEventListener("click", () => editTask(index));
+    textEl.addEventListener("keydown", (e) => { if (e.key === "Enter") editTask(index); });
+
+    container.appendChild(checkbox);
+    container.appendChild(textEl);
+
+    const delBtn = document.createElement("button");
+    delBtn.className = "delete-item";
+    delBtn.setAttribute("aria-label", `Delete todo ${index}`);
+    delBtn.textContent = "Delete";
+    delBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      deleteTask(index);
     });
-    todoList.appendChild(p);
+
+    li.appendChild(container);
+    li.appendChild(delBtn);
+    todoList.appendChild(li);
   });
   todoCount.textContent = todo.length;
+}
+
+function deleteTask(index){
+  const li = todoList.querySelector(`li[data-index="${index}"]`);
+  if(li){
+    li.classList.add("fade-out");
+    setTimeout(() => {
+      todo.splice(index,1);
+      saveToLocalStorage();
+      displayTasks();
+    }, 240);
+  } else {
+    // Fallback
+    todo.splice(index,1);
+    saveToLocalStorage();
+    displayTasks();
+  }
 }
 function editTask(index){
   const todoItem = document.getElementById(`todo-${index}`);
@@ -77,6 +115,7 @@ function editTask(index){
   const inputElement = document.createElement("input");
 
   inputElement.value = existingText;
+  inputElement.className = "edit-input";
   todoItem.replaceWith(inputElement);
   inputElement.focus();
 
@@ -87,6 +126,13 @@ function editTask(index){
       saveToLocalStorage();
     }
     displayTasks();
+  });
+  inputElement.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){
+      inputElement.blur();
+    } else if (e.key === "Escape"){
+      displayTasks();
+    }
   });
 }
 
